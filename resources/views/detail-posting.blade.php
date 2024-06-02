@@ -36,7 +36,34 @@
             {{-- Comment --}}
             <div class="col-4 bg-transparent p-2">
                 <h6>Komentar</h6>
-                <div></div>
+                <div>
+                    @foreach ($post->comments as $comment)
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ $comment->user->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="30" alt="">
+                            <strong>{{ $comment->user->username }}</strong>
+                        </div>
+                        <p>{{ $comment->text_comment }}</p>
+                        <div class="row d-flex justify-content-between">
+                            <div>
+                                <form action="{{ route('posts.likes', $post) }}" method="POST">
+                                    @csrf
+                                    <button class="btn bg-transparent p-0 text-decoration-none" type="submit">
+                                        <svg class="bi me-2" fill="red" width="18" height="18"><use xlink:href="#like"></use></svg>
+                                    </button>
+                                    <span class="fs-8">{{ $post->likes->count() }} {{ Str::plural('like', $post->likes->count()) }}</span>
+                                </form>
+                            </div>
+                            <div>
+                                <a href="#" class="text-decoration-none text-muted ms-3">Reply</a>
+                                @if ($comment->user_id == auth()->id())
+                                <a href="#" class="text-decoration-none text-danger ms-3">Delete</a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
                 <hr>
                 <div class="d-flex justify-content-between">
                     <div>
@@ -53,9 +80,10 @@
                 <form action="{{ route('comments.store') }}" method="post">
                     @csrf
                     <input type="hidden" name="post_id" value="{{ $post->id }}">
-                    <input type="text" class="input-group-text bg-transparent p-0 text-light" name="text_comment" id="text_comment" placeholder="Masukkan komentar">
-                    <button type="submit" class="btn bg-transparent p-0 text-light">Kirim</button>
+                    <input type="text" name="text_comment" id="text_comment" placeholder="Masukkan komentar">
+                    <button type="submit">Kirim</button>
                 </form>
+                
             </div>
         </div>
     </div>

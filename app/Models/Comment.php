@@ -11,9 +11,10 @@ class Comment extends Model
     protected $fillable = [
         'user_id',
         'post_id',
+        'parent_comment_id',
         'text_comment',
-        'parent_comment_id'
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -21,7 +22,7 @@ class Comment extends Model
 
     public function post()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Postingan::class, 'post_id');
     }
 
     public function parentComment()
@@ -29,7 +30,7 @@ class Comment extends Model
         return $this->belongsTo(Comment::class, 'parent_comment_id');
     }
 
-    public function replies()
+    public function childComments()
     {
         return $this->hasMany(Comment::class, 'parent_comment_id');
     }

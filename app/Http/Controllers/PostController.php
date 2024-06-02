@@ -31,13 +31,15 @@ class PostController extends Controller
         return redirect()->route('home', ['user' => $user]);
     }
 
-    // public function detailPosting(User $user){
-    //     $posts = Postingan::all();
-    //     return view('detail-posting', ['posts' => $posts, 'user' => $user]);
-    // }
     public function detailPosting($id) {
         $post = Postingan::findOrFail($id); // Fetch the post by ID
         return view('detail-posting', ['post' => $post]);
+    }
+
+    public function show($id)
+    {
+        $post = Postingan::with('comments.user')->findOrFail($id);
+        return view('detail-postingan', compact('post'));
     }
     
 }

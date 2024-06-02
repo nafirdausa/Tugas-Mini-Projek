@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\Postingan;
 
 class CommentController extends Controller
 {
@@ -11,8 +12,8 @@ class CommentController extends Controller
     {
         // Validation
         $request->validate([
-            'body' => 'required',
-            'post_id' => 'required|exists:posts,id',
+            'text_comment' => 'required',
+            'post_id' => 'required|exists:postingans,id',
             'parent_comment_id' => 'nullable|exists:comments,id',
         ]);
 
@@ -21,10 +22,15 @@ class CommentController extends Controller
             'user_id' => auth()->id(),
             'post_id' => $request->post_id,
             'parent_comment_id' => $request->parent_comment_id,
-            'body' => $request->body,
+            'text_comment' => $request->text_comment,
         ]);
 
         return back();
     }
-}
 
+    public function show($id)
+    {
+        $post = Postingan::with('comments.user')->findOrFail($id);
+        return view('detail-postingan', compact('post'));
+    }
+}

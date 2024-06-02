@@ -107,7 +107,7 @@
                 </div>
             </div>
             <div>
-                <a href="{{route('detail_posting')}}">
+                <a href="{{route('detail_posting', ['id' => $post->id])}}">
                     <img src="{{ Storage::url($post->image) }}" alt="gambar postingan" class="rounded-3 mw-100">
                 </a>
             </div>
