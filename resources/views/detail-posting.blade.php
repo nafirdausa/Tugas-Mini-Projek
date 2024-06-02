@@ -46,13 +46,31 @@
                         <p>{{ $comment->text_comment }}</p>
                         <div class="row d-flex justify-content-between">
                             <div>
-                                <form action="{{ route('posts.likes', $post) }}" method="POST">
-                                    @csrf
-                                    <button class="btn bg-transparent p-0 text-decoration-none" type="submit">
-                                        <svg class="bi me-2" fill="red" width="18" height="18"><use xlink:href="#like"></use></svg>
-                                    </button>
-                                    <span class="fs-8">{{ $post->likes->count() }} {{ Str::plural('like', $post->likes->count()) }}</span>
-                                </form>
+                                @auth
+                                @if(!$comment->likedCommentBy(auth()->user()))
+                                    <form action="{{ route('comments.likes', $comment) }}" method="POST">
+                                        @csrf
+                                        <button class="btn bg-transparent p-0 text-decoration-none" type="submit">
+                                            <svg class="bi me-2" fill="red" width="18" height="18"><use xlink:href="#like"></use></svg>
+                                        </button>
+                                        <span class="fs-8">{{ $comment->likesComment->count() }} {{ Str::plural('like', $comment->likesComment->count()) }}</span>
+                                    </form>
+                                @else
+                                    <form action="{{ route('comments.likes', $post) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn bg-transparent p-0" type="submit">
+                                            <svg class="bi me-2" fill="white" width="18" height="18"><use xlink:href="#like"></use></svg>
+                                        </button>
+                                        <span class="fs-8">{{ $comment->likesComment->count() }} {{ Str::plural('like', $comment->likesComment->count()) }}</span>
+                                    </form>
+                                @endif
+                                @else
+                                    <a href="{{route('login')}}">
+                                        <svg class="bi me-2" fill="white" width="18" height="18"><use xlink:href="#like"></use></svg>
+                                    </a>
+                                    <span class="fs-8">{{ $comment->likesComment->count() }} {{ Str::plural('like', $comment->likesComment->count()) }}</span>
+                                @endauth
                             </div>
                             <div>
                                 <a href="#" class="text-decoration-none text-muted ms-3">Reply</a>

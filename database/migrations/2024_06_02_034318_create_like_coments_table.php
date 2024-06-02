@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('like_coments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('comment_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
+
+            $table->unique(['user_id', 'comment_id']);
         });
     }
 

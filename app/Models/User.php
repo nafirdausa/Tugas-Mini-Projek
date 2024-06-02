@@ -105,24 +105,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    // public function follows(User $user)
-    // {
-    //     return $this->hasMany(Follow::class);
-    // }
+    public function likesComment()
+    {
+        return $this->hasMany(LikeComent::class);
+    }
 
-    // public function followBy(User $user)
-    // {
-    //     return $this->follows()->where('user_id', $user->id)->exists();
-    // }
-
-    // Relasi untuk pengguna yang diikuti (following)
-    
-
-    // Relasi untuk pengguna yang mengikuti (followers)
-    // public function followers()
-    // {
-    //     return $this->belongsToMany(User::class, 'follows', 'followed_id', 'follower_id');
-    // }
 }
 
 

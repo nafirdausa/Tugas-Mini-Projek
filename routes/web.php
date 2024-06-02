@@ -62,6 +62,8 @@ Route::post('/follow/{userId}', [FollowController::class, 'followUser'])->name('
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+Route::post('/comments/{comment}/likes', [CommentController::class, 'likeComment'])->name('comments.likes');
+Route::delete('/comments/{comment}/likes', [CommentController::class, 'unlikeComment'])->name('comments.likes');
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/notifications', [NotificationController::class, 'notif'])->name('notifications');
 //     Route::post('/notifications/{notification}/markAsRead', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
