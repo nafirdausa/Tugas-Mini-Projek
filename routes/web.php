@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjekController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,10 +34,12 @@ Route::post('/handle-login', [UserController::class, 'handleLogin'])->name('hand
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/MyProfile', [UserController::class, 'profile'])->name('profile');
+Route::get('/edit-profile', [UserController::class, 'editProfile'])->name('profile.edit');
+Route::post('/confirm-password', [UserController::class, 'confirmPassword'])->name('profile.confirmPassword');
 
 Route::get('/formPost', [PostController::class, 'posting'])->name('posting');
 Route::post('/post-request', [PostController::class, 'postRequest'])->name('postRequest');
-Route::get('/seePost', [PostController::class, 'detailPosting'])->name('detail_posting');
+Route::get('/seePost/{id}', [PostController::class, 'detailPosting'])->name('detail_posting');
 
 Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.likes');
 Route::delete('/posts/{post}/likes', [PostLikeController::class, 'destroy'])->name('posts.likes');
@@ -52,7 +55,12 @@ Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('users.
 Route::delete('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('users.unfollow');
 
 Route::get('/notifications', [NotificationController::class, 'notif'])->name('notifications');
-Route::post('/notifications/{notification}/markAsRead', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+Route::get('/notifications/comments', [NotificationController::class, 'comments'])->name('notifications.comments');
+Route::get('/notifications/likes', [NotificationController::class, 'likes'])->name('notifications.likes');
+Route::post('/like/{postId}', [LikeController::class, 'likePost'])->name('like.post');
+Route::post('/follow/{userId}', [FollowController::class, 'followUser'])->name('follow.user');
+
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/notifications', [NotificationController::class, 'notif'])->name('notifications');

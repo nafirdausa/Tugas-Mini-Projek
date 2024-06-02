@@ -1,30 +1,36 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    // Menampilkan semua notifikasi untuk pengguna tertentu
-    public function notif(User $user)
+    public function __construct()
     {
-        $notifications = $user->notifications()->latest()->paginate(10);
+        $this->middleware('auth');
+    }
+
+    public function notif()
+    {
+        $notifications = auth()->user()->notifications;
+
         return view('notifications', compact('notifications'));
     }
 
-    // Menandai notifikasi sebagai sudah dibaca
-    public function markAsRead(Notification $notification)
+    public function comments()
     {
-        $notification->markAsRead();
-        return back();
+        $notifications = auth()->user()->notifications()->where('type', 'comment')->get();
+
+        return view('notifications', compact('notifications'));
     }
 
-    // Menandai semua notifikasi sebagai sudah dibaca
-    public function markAllAsRead(User $user)
+    public function likes()
     {
-        $user->unreadNotifications->markAsRead();
-        return back();
+        $notifications = auth()->user()->notifications()->where('type', 'like')->get();
+
+        return view('notifications', compact('notifications'));
     }
 }

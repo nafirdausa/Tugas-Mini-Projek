@@ -100,6 +100,11 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     // public function follows(User $user)
     // {
     //     return $this->hasMany(Follow::class);

@@ -99,15 +99,20 @@ class UserController extends Controller
         return view('profile', ['posts' => $posts, 'user' => $user]);
     }
 
-     // Relasi untuk pengguna yang diikuti (following)
-     public function following()
-     {
-         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'followed_id');
-     }
- 
-     // Relasi untuk pengguna yang mengikuti (followers)
-     public function followers()
-     {
-         return $this->belongsToMany(User::class, 'follows', 'followed_id', 'follower_id');
-     }
+    public function editProfile()
+    {
+        // Logic untuk menampilkan halaman edit profil
+        return view('profile-edit');
+    }
+    public function confirmPassword(Request $request)
+    {
+        $password = $request->input('password');
+        if (Hash::check($password, Auth::user()->password)) {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false]);
+    }
+
+    
+
 }

@@ -15,10 +15,47 @@
             <p>{{ $user->bio }}</p>
         </div>
         <div class="col">
-            <a href="#" class="nav-link text-white">
+            <button type="button" class="btn bg-transparent p-0" id="edit-profile-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <svg class="bi me-2" fill="#4B9494" width="16" height="16"><use xlink:href="#setting"></use></svg>
-            </a>
+            </button>
+            {{-- <a href="#" class="nav-link text-white" id="edit-profile-link">
+                <svg class="bi me-2" fill="#4B9494" width="16" height="16"><use xlink:href="#setting"></use></svg>
+            </a> --}}
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="passwordModalLabel">Confirm Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="confirmPasswordButton">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for password confirmation -->
+        {{-- <div class="modal fade" tabindex="-1" id="passwordModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Confirm Password</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="confirmPasswordButton">Confirm</button>
+                </div>
+              </div>
+            </div>
+        </div> --}}
     @endauth
 </div>
 
@@ -56,10 +93,10 @@
     </div>
 </div> --}}
 
-<div class="row mt-4">
+<div class="row mt-4" tabindex="-1">
     @auth
     @forelse ($posts as $post)
-        <div class="col-3 card border-light bg-transparent p-2">
+        <div class="col-3 card border-light bg-transparent p-2 ms-2">
             <div class="d-flex justify-content-start">
                 <div class="">
                     <img src="{{ $user->profil_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="40" alt="">
@@ -81,3 +118,5 @@
     @endauth
 </div>
 @endsection
+
+

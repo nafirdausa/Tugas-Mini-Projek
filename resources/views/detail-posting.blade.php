@@ -19,7 +19,6 @@
 <!-- Main Content Left -->
 <div class="col border rounded" style="width: 100%; height: 100%; margin: 10px">
     <div class="p-3">
-        @foreach ($posts as $post)
         <div class="row d-flex justify-content-between">
             {{-- Postingan --}}
             <div class="col-8 bg-transparent p-2">
@@ -31,10 +30,8 @@
                         <h6>{{ $post->user ? $post->user->username : 'Unknown' }}</h6>
                     </div>
                 </div>
-                <p>{{$post->caption}}</p>
-                <a href="{{route('detail_posting')}}">
-                    <img src="{{ Storage::url($post->image) }}" alt="gambar postingan" class="rounded-3 post-image" width="100%">
-                </a>
+                <p>{{ $post->caption }}</p>
+                <img src="{{ Storage::url($post->image) }}" alt="gambar postingan" class="rounded-3 post-image" width="100%">
             </div>
             {{-- Comment --}}
             <div class="col-4 bg-transparent p-2">
@@ -53,12 +50,14 @@
                 </div>
                 <p>{{ $post->created_at->diffForHumans() }}</p>
 
+                <form action="{{ route('comments.store') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                    <input type="text" class="input-group-text bg-transparent p-0 text-light" name="text_comment" id="text_comment" placeholder="Masukkan komentar">
+                    <button type="submit" class="btn bg-transparent p-0 text-light">Kirim</button>
+                </form>
             </div>
         </div>
-        @endforeach
-
     </div>
 </div>
-
 @endsection
-
