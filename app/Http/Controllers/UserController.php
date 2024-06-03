@@ -84,40 +84,86 @@ class UserController extends Controller
         return view('profile', ['posts' => $posts, 'user' => $user]);
     }
 
+    // public function editProfile(User $user)
+    // {
+    //     return view('profile-edit',['user'=>$user]);
+    // }
+    // public function editProfileRequest(Request $request, User $user)
+    // {
+    //     if(!$request->filled('profile_image')){
+    //         return redirect()->back()->with('error', 'Error. File image Produk Wajib Diisi');
+    //     }elseif(!$request->filled('username')){
+    //         return redirect()->back()->with('error', 'Error. File username Produk Wajib Diisi');
+    //     }elseif(!$request->filled('name')){
+    //         return redirect()->back()->with('error', 'Error. File name Wajib Diisi');
+    //     }
+    //     elseif(!$request->filled('bio')){
+    //         return redirect()->back()->with('error', 'Error. File bio Wajib Diisi');
+    //     }
+        
+    //     if($user->user_id === $user->id){
+    //         $user->username = $request->username;
+    //         $user->name = $request->name;
+    //         $user->bio = $request->bio;
+    //         $user->profile_image = $request->profile_image;
+    //     }
+    //     $user->save();
+    //     return redirect()->route('profile', ['user'=>$user->id])->with('message', 'Berhasil update data');
+    // }
     public function editProfile(User $user)
     {
-        return view('profile-edit',['user'=>$user]);
+        return view('profile-edit', ['user' => $user]);
     }
+
     public function editProfileRequest(Request $request, User $user)
     {
-        if(!$request->filled('profile_image')){
-            return redirect()->back()->with('error', 'Error. File image Produk Wajib Diisi');
-        }elseif(!$request->filled('username')){
-            return redirect()->back()->with('error', 'Error. File username Produk Wajib Diisi');
-        }elseif(!$request->filled('name')){
-            return redirect()->back()->with('error', 'Error. File name Wajib Diisi');
+        // Validasi input
+        $request->validate([
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'username' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'bio' => 'nullable|string',
+        ]);
+
+        // Cek otorisasi pengguna
+        if (Auth::id() !== $user->id) {
+            return redirect()->back()->with('error', 'Anda tidak diizinkan untuk mengupdate profil ini.');
         }
-        elseif(!$request->filled('bio')){
-            return redirect()->back()->with('error', 'Error. File bio Wajib Diisi');
+
+        // Simpan gambar jika diupload
+        if ($request->hasFile('profile_image')) {
+            $profileImage = $request->file('profile_image');
+            $profileImageName = time().'.'.$profileImage->getClientOriginalExtension();
+            $profileImage->move(public_path('images'), $profileImageName);
+            $user->profile_image = 'images/'.$profileImageName;
         }
-        
-        if($user->user_id === $user->id){
-            $user->username = $request->username;
-            $user->name = $request->name;
-            $user->bio = $request->bio;
-            $user->profile_image = $request->profile_image;
-        }
+
+        // Simpan data pengguna
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->bio = $request->bio;
         $user->save();
-        return redirect()->route('profile', ['user'=>$user->id])->with('message', 'Berhasil update data');
+
+        return redirect()->route('profile', ['user' => $user->id])->with('message', 'Berhasil update data');
     }
     
-    public function confirmPassword(Request $request)
+    // public function confirmPassword(Request $request)
+    // {
+    //     $password = $request->input('password');
+    //     if (Hash::check($password, Auth::user()->password)) {
+    //         return response()->json(['success' => true]);
+    //     }
+    //     return response()->json(['success' => false]);
+    // }
+    public function checkPassword(Request $request)
     {
-        $password = $request->input('password');
-        if (Hash::check($password, Auth::user()->password)) {
-            return response()->json(['success' => true]);
+        $user = Auth::user();
+
+        if (Hash::check($request->password, $user->password)) {
+            return response()->json(['success' => true, 'user_id' => $user->id]);
+        } else {
+            return response()->json(['success' => false]);
         }
-        return response()->json(['success' => false]);
     }
 
     

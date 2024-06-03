@@ -6,7 +6,7 @@
     <div class="py-3">
         <ul class="nav justify-content-center">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">For You</a>
+              <a class="nav-link active" aria-current="page" href="{{route('home')}}">For You</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Following</a>
@@ -26,10 +26,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="">
-                            <img src="{{asset('images/default_profile.png')}}" class="rounded-circle me-2" width="50" alt="" srcset="">
+                            <img src="{{ $post->user->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="50" height="50" alt="img-profil">
                         </div>
                         <div class="flex-fill">
-                            {{-- <h6>{{Auth::user()->username}}</h6> --}}
                             <h6>{{ $post->user ? $post->user->username : 'Unknown' }}</h6>
                             <p>{{ $post->created_at->diffForHumans() }}</p>
                         </div>
@@ -115,7 +114,7 @@
                 <div class="row">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <img src="{{ asset('images/default_profile.png') }}" class="rounded-circle me-2" width="50" alt="">
+                            <img src="{{ $usr->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="50" alt="">
                         </div>
                         <div class="flex-fill">
                             <h6>{{ $usr->username }}</h6>

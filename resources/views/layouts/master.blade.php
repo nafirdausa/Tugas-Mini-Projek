@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My App</title>
     
@@ -77,14 +77,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="passwordModalLabel">Confirm Password</h5>
+                    <h5 class="modal-title" id="passwordModalLabel">Konfirmasi Password</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="confirmPasswordButton">Confirm</button>
+                    <form id="passwordForm">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="passwordInput" class="form-label text-dark">Masukkan Password</label>
+                            <input type="password" class="form-control" id="passwordInput" required>
+                            <div class="invalid-feedback">
+                                Password salah. Silakan coba lagi.
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="confirmPasswordButton">Konfirmasi</button>
+                    </form>
                 </div>
             </div>
         </div>

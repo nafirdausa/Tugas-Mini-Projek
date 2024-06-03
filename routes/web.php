@@ -36,9 +36,10 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 // profile
 Route::get('/MyProfile', [UserController::class, 'profile'])->name('profile');
-Route::get('/edit-profile', [UserController::class, 'editProfile'])->name('edit-profile');
-Route::post('/confirm-password', [UserController::class, 'confirmPassword'])->name('profile.confirmPassword');
-Route::post('/editProfileRequest', [UserController::class, 'editProfileRequest'])->name('editProfileRequest');
+Route::get('/edit-profile/{user}', [UserController::class, 'editProfile'])->name('edit-profile');
+Route::post('/edit-profile/{user}', [UserController::class, 'editProfileRequest'])->name('editProfileRequest');
+Route::post('/check-password', [UserController::class, 'checkPassword'])->name('check-password');
+// Route::post('/confirm-password', [UserController::class, 'confirmPassword'])->name('profile.confirmPassword');
 
 // Postingan
 Route::get('/formPost', [PostController::class, 'posting'])->name('posting');

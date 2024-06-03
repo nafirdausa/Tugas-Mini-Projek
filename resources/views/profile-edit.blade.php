@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="col-6">
-    <form action="{{ route('editProfileRequest') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('editProfileRequest',['user' => $user->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row mt-3">
             <div class="col-3 d-flex flex-column align-items-center">

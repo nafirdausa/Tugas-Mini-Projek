@@ -48,7 +48,7 @@
 <div class="py-3 sidebar ms-2">
   @auth
     <a href="{{route('profile')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none inline-block">
-        <img src="https://github.com/mdo.png" alt="" width="50" height="50" class="rounded-circle me-2">
+        <img src="{{ Auth::user()->profile_image ?? asset('images/default_profile.png') }}" alt="" width="50" height="50" class="rounded-circle me-2">
         <div class="inline-block">
             <span class="fs-5">{{ Auth::user()->username }}</span><br>
             <span class="fs-6">{{ Auth::user()->name }}</span>

@@ -28,7 +28,7 @@
       <div class="card bg-transparent border p-3" style="width: 25rem;">
           <div class="d-flex justify-content-between">
               <div>
-                  <img src="{{ asset('images/default_profile.png') }}" class="rounded-circle me-2" width="50" alt="">
+                  <img src="{{ Auth::user()->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="50" height="50" alt="">
               </div>
               <div>
                   <h5>{{ Auth::user()->username }}</h5>

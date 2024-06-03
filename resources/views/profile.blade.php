@@ -4,7 +4,8 @@
 <div class="row mt-5">
     @auth
         <div class="col-3 d-flex justify-content-end">
-            <img src="{{ $user->profil_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="125" height="125" alt="" srcset="">
+            <img src="{{ $user->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="125" height="125" alt="Profile Image">
+            {{-- <img src="{{ $user->profil_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="125" height="125" alt="" srcset=""> --}}
         </div>
         <div class="col-7">
             <h6>{{ $user->username }}</h6>
@@ -14,6 +15,11 @@
             <p>{{ $user->name }}</p>
             <p>{{ $user->bio }}</p>
         </div>
+        {{-- <div class="col">
+            <button type="button" class="btn bg-transparent p-0" id="edit-profile-link" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                <svg class="bi me-2" fill="#4B9494" width="16" height="16"><use xlink:href="#setting"></use></svg>
+            </button>
+        </div> --}}
         <div class="col">
             <button type="button" class="btn bg-transparent p-0" id="edit-profile-link" data-bs-toggle="modal" data-bs-target="#passwordModal">
                 <svg class="bi me-2" fill="#4B9494" width="16" height="16"><use xlink:href="#setting"></use></svg>
@@ -31,7 +37,7 @@
         <div class="col-3 card border-light bg-transparent p-2 ms-2">
             <div class="d-flex justify-content-start">
                 <div class="">
-                    <img src="{{ $user->profil_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="40" alt="">
+                    <img src="{{ $user->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="40" height="40" alt="">
                 </div>
                 <div class="flex-fill">
                     <h6>{{ $user->username }}</h6>
