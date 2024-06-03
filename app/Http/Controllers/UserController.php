@@ -17,45 +17,30 @@ class UserController extends Controller
     }
 
     public function handleRegister(Request $request){
-        // Membuat validator untuk memvalidasi data yang diterima dari request
+        
         $validator = Validator::make($request->all(), [
-            'username' => 'required', // Field 'username' wajib diisi
-            'name' => 'required', // Field 'name' wajib diisi
-            'email' => 'required|email|unique:users,email', // Field 'email' wajib diisi, harus berformat email, dan unik di tabel 'users'
-            'password' => 'required|min:8|confirmed', // Field 'password' wajib diisi, minimal 8 karakter, dan harus dikonfirmasi
-            // 'bio' => 'nullable', // Field 'gender' wajib diisi, harus bernilai 'male' atau 'female'
-            // 'profil_image' => 'nullable', // Field 'age' wajib diisi, harus berupa bilangan bulat, dan minimal 1
+            'username' => 'required', 
+            'name' => 'required', 
+            'email' => 'required|email|unique:users,email', 
         ]);
 
-        // Mengecek apakah validasi gagal
         if ($validator->fails()) {
-            // Jika validasi gagal, arahkan kembali ke halaman 'register'
-            // dengan pesan kesalahan dan input sebelumnya
             return redirect()->route('register')
-                ->withErrors($validator) // Mengirim pesan kesalahan ke view
-                ->withInput(); // Mengirim kembali input yang sudah diisi
+                ->withErrors($validator) 
+                ->withInput(); 
         }
 
-        // Membuat pengguna baru dengan data yang valid
         $user = User::create([
-            'username' => $request->username, // Mengisi field 'name' dengan data dari request
-            'name' => $request->name, // Mengisi field 'name' dengan data dari request
-            'email' => $request->email, // Mengisi field 'email' dengan data dari request
-            'password' => Hash::make($request->password), // Mengenkripsi password sebelum disimpan
+            'username' => $request->username, 
+            'name' => $request->name, 
+            'email' => $request->email, 
+            'password' => Hash::make($request->password),
         ]);
 
-        // $user = User::where('email', $request->email)->first();
-        // $user->assignRole('user');
-
-        // Mengecek apakah pengguna berhasil dibuat
         if ($user) {
-            // Jika berhasil, arahkan kembali ke halaman 'register'
-            // dengan pesan sukses
             return redirect()->route('login')
                 ->with('success', 'User created successfully');
         } else {
-            // Jika gagal, arahkan kembali ke halaman 'register'
-            // dengan pesan error
             return redirect()->route('register')
                 ->with('error', 'Failed to create user');
         }

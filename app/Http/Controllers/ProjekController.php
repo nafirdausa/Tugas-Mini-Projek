@@ -22,12 +22,10 @@ class ProjekController extends Controller
     
     public function index()
     {
-        // Mendapatkan semua postingan
         $posts = Postingan::all();
         if (Auth::check()) {
             $userId = auth()->id();
             
-            // Mendapatkan semua pengguna kecuali pengguna saat ini dan yang sudah diikuti
             $suggestions = User::where('id', '!=', $userId)
                 ->whereDoesntHave('FollowUser', function ($query) use ($userId) {
                     $query->where('follower_id', $userId);
@@ -39,7 +37,6 @@ class ProjekController extends Controller
             // dd($suggestions);
         }
         
-        // Mengirim data ke view
         return view('home', ['posts' => $posts, 'suggestions' => $suggestions]);
     }
     
