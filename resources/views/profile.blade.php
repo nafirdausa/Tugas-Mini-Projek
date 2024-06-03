@@ -15,30 +15,18 @@
             <p>{{ $user->bio }}</p>
         </div>
         <div class="col">
-            <button type="button" class="btn bg-transparent p-0" id="edit-profile-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn bg-transparent p-0" id="edit-profile-link" data-bs-toggle="modal" data-bs-target="#passwordModal">
                 <svg class="bi me-2" fill="#4B9494" width="16" height="16"><use xlink:href="#setting"></use></svg>
             </button>
+            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+            </button> --}}
             {{-- <a href="#" class="nav-link text-white" id="edit-profile-link">
                 <svg class="bi me-2" fill="#4B9494" width="16" height="16"><use xlink:href="#setting"></use></svg>
             </a> --}}
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="passwordModalLabel">Confirm Password</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="confirmPasswordButton">Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- Modal for password confirmation -->
         {{-- <div class="modal fade" tabindex="-1" id="passwordModal">
             <div class="modal-dialog">
@@ -118,5 +106,6 @@
     @endauth
 </div>
 @endsection
+
 
 

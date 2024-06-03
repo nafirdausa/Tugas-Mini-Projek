@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
@@ -94,16 +94,38 @@ class UserController extends Controller
     // Profile
     public function profile(User $user)
     {
-        $user = auth()->user(); // Retrieve the currently logged-in user
+        $user = auth()->user(); 
         $posts = Postingan::where('user_id', $user->id)->get(); // Filter posts by user ID
         return view('profile', ['posts' => $posts, 'user' => $user]);
     }
 
-    public function editProfile()
+    public function editProfile(User $user)
     {
-        // Logic untuk menampilkan halaman edit profil
-        return view('profile-edit');
+        return view('profile-edit',['user'=>$user]);
     }
+    public function editProfileRequest(Request $request, User $user)
+    {
+        if(!$request->filled('profile_image')){
+            return redirect()->back()->with('error', 'Error. File image Produk Wajib Diisi');
+        }elseif(!$request->filled('username')){
+            return redirect()->back()->with('error', 'Error. File username Produk Wajib Diisi');
+        }elseif(!$request->filled('name')){
+            return redirect()->back()->with('error', 'Error. File name Wajib Diisi');
+        }
+        elseif(!$request->filled('bio')){
+            return redirect()->back()->with('error', 'Error. File bio Wajib Diisi');
+        }
+        
+        if($user->user_id === $user->id){
+            $user->username = $request->username;
+            $user->name = $request->name;
+            $user->bio = $request->bio;
+            $user->profile_image = $request->profile_image;
+        }
+        $user->save();
+        return redirect()->route('profile', ['user'=>$user->id])->with('message', 'Berhasil update data');
+    }
+    
     public function confirmPassword(Request $request)
     {
         $password = $request->input('password');

@@ -64,3 +64,21 @@
     overflow: auto;
     overflow-y: auto;
 }
+
+/* edit profile */
+.custom-file-label {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.custom-file-input {
+    display: none;
+}
+
+.form-control {
+    width: 100%;
+}
+
+#image-preview {
+    cursor: pointer;
+}

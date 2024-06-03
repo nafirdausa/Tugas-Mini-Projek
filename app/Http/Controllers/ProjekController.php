@@ -22,17 +22,22 @@ class ProjekController extends Controller
     
     public function index()
     {
-        $userId = auth()->id();
-        
         // Mendapatkan semua postingan
         $posts = Postingan::all();
-        
-        // Mendapatkan semua pengguna kecuali pengguna saat ini dan yang sudah diikuti
-        $suggestions = User::where('id', '!=', $userId)
-            ->whereDoesntHave('FollowUser', function ($query) use ($userId) {
-                $query->where('follower_id', $userId);
-            })
-            ->get();
+        if (Auth::check()) {
+            $userId = auth()->id();
+            
+            // Mendapatkan semua pengguna kecuali pengguna saat ini dan yang sudah diikuti
+            $suggestions = User::where('id', '!=', $userId)
+                ->whereDoesntHave('FollowUser', function ($query) use ($userId) {
+                    $query->where('follower_id', $userId);
+                })
+                ->get();
+        } else {
+            $suggestions = User::orderBy('created_at', 'desc')
+                ->get()->toArray();
+            // dd($suggestions);
+        }
         
         // Mengirim data ke view
         return view('home', ['posts' => $posts, 'suggestions' => $suggestions]);

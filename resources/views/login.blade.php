@@ -15,7 +15,7 @@
                 <img src="{{asset('images/logo-medsos.png')}}" alt="logo-z" srcset="" width="250">
             </div>
             <div class="col mt-5">
-                <h4>Login</h4>
+                <h4>Login Test</h4>
                 <!-- error message -->
                 @if (session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
