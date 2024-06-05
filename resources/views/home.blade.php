@@ -42,7 +42,7 @@
                                         </button>
                                     </form>
                                 @else
-                                    <form action="{{ route('posts.bookmark', $post) }}" method="POST">
+                                    <form action="{{ route('posts.unbookmark', $post) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn bg-transparent p-0" type="submit">
@@ -55,7 +55,7 @@
                                     <svg class="bi me-2" fill="white" width="18" height="18"><use xlink:href="#bookmark"></use></svg>
                                 </a>
                             @endauth
-                        </div>
+                        </div> 
                     </div>
                     <p>{{$post->caption}}</p>
                     <a href="{{route('detail_posting', ['id' => $post->id])}}">
@@ -114,7 +114,7 @@
                 <div class="row">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <img src="{{ $usr->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="50" alt="">
+                            <img src="{{ $usr->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="50" height="50" alt="">
                         </div>
                         <div class="flex-fill">
                             <h6>{{ $usr->username }}</h6>

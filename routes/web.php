@@ -53,7 +53,8 @@ Route::delete('/posts/{post}/likes', [PostLikeController::class, 'destroy'])->na
 // Bookmark
 Route::get('/seeBookmark', [BookmarkController::class, 'seeBookmark'])->name('bookmark');
 Route::post('/posts/{post}/bookmark', [BookmarkController::class, 'bookmark'])->name('posts.bookmark');
-Route::delete('/posts/{post}/bookmark', [BookmarkController::class, 'unbookmark'])->name('posts.bookmark');
+Route::delete('/posts/{post}/unbookmark', [BookmarkController::class, 'unbookmark'])->name('posts.unbookmark');
+
 
 // Following & Followers
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('users.follow');

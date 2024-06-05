@@ -13,12 +13,11 @@ class BookmarkController extends Controller
         $this->middleware(['auth']);
     }
 
-    // Bookmark Method
-    public function seeBookmark(User $user){
-        $posts = $user->bookmarkedPosts()->with('user')->get();
-        // return view('bookmark', ['posts' => $posts]);
-        
-        // $posts = Postingan::all();
+   
+    public function seeBookmark()
+    {
+        $user = auth()->user();
+        $posts = $user->bookmarks()->with('user')->get();
         return view('bookmark', ['posts' => $posts, 'user' => $user]);
     }
 
@@ -28,17 +27,13 @@ class BookmarkController extends Controller
             return response(null, 409);
         }
 
-        $post->bookmarks()->create([
-            'user_id' => $request->user()->id,
-        ]);
-
+        $post->bookmarks()->attach($request->user()->id);
         return back();
     }
 
     public function unbookmark(Postingan $post, Request $request)
     {
-        $request->user()->bookmarks()->where('post_id', $post->id)->delete();
-
+        $request->user()->bookmarks()->detach($post->id);
         return back();
     }
 }

@@ -32,15 +32,14 @@ class Postingan extends Model
 
     public function bookmarks()
     {
-        // return $this->hasMany(Like::class, 'post_id');
-        return $this->hasMany(Bookmark::class, 'post_id');
+        return $this->belongsToMany(User::class, 'bookmarks', 'post_id', 'user_id')->withTimestamps();
     }
 
     public function bookmarkBy(User $user)
     {
-        // return $this->likes()->where('user_id', $user->id)->exists();
-        return $this->bookmarks()->where('user_id', $user->id)->exists();
+        return $this->bookmarks->contains('id', $user->id);
     }
+
 
     public function comments()
     {

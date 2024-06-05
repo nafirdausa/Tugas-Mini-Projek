@@ -10,27 +10,24 @@
 @endsection
 
 @section('content')
-<!-- Main Content Left -->
 <div class="col" style="width: 100%; height: 100%;">
-    <div class="p-3 px-5">
+    <div class="p-3 px-5 d-flex flex-wrap">
         @auth
             @forelse ($posts as $post)
-                <div class="row d-flex justify-content-start">
-                    <div class="col-3 card border-light bg-transparent p-2">
-                        <div class="d-flex justify-content-start">
-                            <div class="">
-                                <img src="{{asset('images/default_profile.png')}}" class="rounded-circle me-2" width="40" alt="" srcset="">
-                            </div>
-                            <div class="flex-fill">
-                                <h6>{{ $post->user ? $post->user->username : 'Unknown' }}</h6>
-                                <p style="margin-top: -10px;">{{ $post->created_at->diffForHumans() }}</p>
-                            </div> 
+                <div class="card border-light bg-transparent p-2 m-2" style="width: 18rem;">
+                    <div class="d-flex justify-content-start">
+                        <div class="">
+                            <img src="{{ $post->user->profile_image ?? asset('images/default_profile.png') }}" class="rounded-circle me-2" width="40" height="40" alt="">
                         </div>
-                        <div>
-                            <a href="{{route('detail_posting')}}">
-                                <img src="{{ Storage::url($post->image) }}" alt="gambar postingan" class="rounded-3 mw-100">
-                            </a>
-                        </div>
+                        <div class="flex-fill">
+                            <h6>{{ $post->user ? $post->user->username : 'Unknown' }}</h6>
+                            <p style="margin-top: -10px;">{{ $post->created_at->diffForHumans() }}</p>
+                        </div> 
+                    </div>
+                    <div>
+                        <a href="{{ route('detail_posting', $post->id) }}">
+                            <img src="{{ Storage::url($post->image) }}" alt="gambar postingan" class="rounded-3 mw-100">
+                        </a>
                     </div>
                 </div>
             @empty
@@ -42,4 +39,6 @@
     </div>
 </div>
 @endsection
+
+
  
