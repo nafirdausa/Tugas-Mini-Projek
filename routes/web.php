@@ -26,6 +26,7 @@ use App\Http\Controllers\CommentController;
 // });
 
 Route::get('/', [ProjekController::class, 'index'])->name('home');
+Route::get('/home-following', [ProjekController::class, 'indexFollowing'])->name('home_following');
 
 // login-register
 Route::get('/register', [UserController::class, 'register'])->name('register');

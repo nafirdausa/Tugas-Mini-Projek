@@ -9,7 +9,7 @@
               <a class="nav-link active" aria-current="page" href="{{route('home')}}">For You</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Following</a>
+              <a class="nav-link" href="{{route('home_following')}}">Following</a>
             </li>
         </ul>
     </div>
@@ -38,7 +38,7 @@
                                     <form action="{{ route('posts.bookmark', $post) }}" method="POST">
                                         @csrf
                                         <button class="btn bg-transparent p-0 text-decoration-none" type="submit">
-                                            <svg class="bi me-2" fill="white" width="18" height="18"><use xlink:href="#bookmark-fill"></use></svg>
+                                            <svg class="bi me-2" fill="white" width="18" height="18"><use xlink:href="#bookmark"></use></svg>
                                         </button>
                                     </form>
                                 @else
@@ -46,7 +46,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn bg-transparent p-0" type="submit">
-                                            <svg class="bi me-2" fill="white" width="18" height="18"><use xlink:href="#bookmark"></use></svg>
+                                            <svg class="bi me-2" fill="white" width="18" height="18"><use xlink:href="#bookmark-fill"></use></svg>
                                         </button>
                                     </form>
                                 @endif
